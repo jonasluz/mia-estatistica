@@ -851,7 +851,7 @@ MonoBehaviour:
   cam: {fileID: 75100594}
   configCanvas: {fileID: 589390610}
   runningToggle: {fileID: 198194706}
-  debug: 1
+  debug: 0
 --- !u!1 &320371927
 GameObject:
   m_ObjectHideFlags: 0

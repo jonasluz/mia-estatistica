@@ -44,7 +44,7 @@ public class BoardManager : MonoBehaviour, IStepListener {
             if (config.debug) icons[i].DebugID = i;
         }
         Board.B.AddListener(this);
-        Board.B.AddListener(new ConsoleMonitor());
+        if (config.debug) Board.B.AddListener(new ConsoleMonitor());
         timer = Time.timeSinceLevelLoad;
         Board.B.Init(config.n);
     }
