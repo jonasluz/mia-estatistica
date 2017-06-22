@@ -30,7 +30,7 @@ public class Board
     /// </summary>
     /// <param name="idx">índice</param>
     /// <returns>Been gurdado no índice dado.</returns>
-    public Been Get(int idx)
+    public Being Get(int idx)
     {
         return data[idx];
     }
@@ -42,7 +42,7 @@ public class Board
     {
         get
         {
-            return indexes[Been.HealthStatus.INFECTED].Count == 0;
+            return indexes[Being.HealthStatus.INFECTED].Count == 0;
         }
     }
 
@@ -57,11 +57,11 @@ public class Board
     /// <summary>
     /// Dados da rede de seres.
     /// </summary>
-    private Been[] data;
+    private Being[] data;
     /// <summary>
     /// Índices dos tipos na rede, para acesso randômico.
     /// </summary>
-    private Dictionary<Been.HealthStatus, List<int>> indexes;
+    private Dictionary<Being.HealthStatus, List<int>> indexes;
     /// <summary>
     /// Lugares disponíveis na rede antes e durante a inicialização desta.
     /// </summary>
@@ -93,31 +93,31 @@ public class Board
         N = n;
         maximum = N * N;
         canChoose = new List<int>(maximum);
-        data = new Been[maximum];
+        data = new Being[maximum];
         for (int i = 0; i < maximum; ++i)
         {
-            data[i] = new Been();
+            data[i] = new Being();
             canChoose.Add(i);
         }
         indexes =
-        new Dictionary<Been.HealthStatus, List<int>>() {
-            {  Been.HealthStatus.DEAD, new List<int>() },
-            {  Been.HealthStatus.IMUNE, new List<int>() },
-            {  Been.HealthStatus.HEALTHY, new List<int>() },
-            {  Been.HealthStatus.PSEUDOIMUNE, new List<int>() },
-            {  Been.HealthStatus.INFECTED, new List<int>() }
+        new Dictionary<Being.HealthStatus, List<int>>() {
+            {  Being.HealthStatus.DEAD, new List<int>() },
+            {  Being.HealthStatus.IMUNE, new List<int>() },
+            {  Being.HealthStatus.HEALTHY, new List<int>() },
+            {  Being.HealthStatus.PSEUDOIMUNE, new List<int>() },
+            {  Being.HealthStatus.INFECTED, new List<int>() }
         };
 
         // Seleciona e gera o infectado. 
         int pos = RandomPosition();
-        data[pos].Health = Been.HealthStatus.INFECTED;
-        indexes[Been.HealthStatus.INFECTED].Add(pos);
+        data[pos].Health = Being.HealthStatus.INFECTED;
+        indexes[Being.HealthStatus.INFECTED].Add(pos);
 
         // Gera os seres imunes e pseudoimunes com iguais chances de predominar com os saudáveis.
-        List<Been.HealthStatus> missingStates = new List<Been.HealthStatus>() {
-            Been.HealthStatus.IMUNE,
-            Been.HealthStatus.PSEUDOIMUNE,
-            Been.HealthStatus.HEALTHY
+        List<Being.HealthStatus> missingStates = new List<Being.HealthStatus>() {
+            Being.HealthStatus.IMUNE,
+            Being.HealthStatus.PSEUDOIMUNE,
+            Being.HealthStatus.HEALTHY
         };
         int choosen = Random.Range(0, 3);
         Distribute(missingStates[choosen]);
@@ -138,7 +138,7 @@ public class Board
     /// </summary>
     /// <param name="health">estado de saúde dos seres.</param>
     /// <param name="remaining">distribuir por todos os disponíveis remanescentes?</param>
-    private IEnumerable<int> Distribute(Been.HealthStatus health, bool remaining = false)
+    private IEnumerable<int> Distribute(Being.HealthStatus health, bool remaining = false)
     {
         List<int> distributed = new List<int>();
         int qtd = remaining ? canChoose.Count : UnityEngine.Random.Range(1, canChoose.Count);
@@ -176,11 +176,11 @@ public class Board
     {
         int num = steps.Count + 1;
         steps.Add(new CycleStep(num,
-                    indexes[Been.HealthStatus.HEALTHY].Count,
-                    indexes[Been.HealthStatus.IMUNE].Count,
-                    indexes[Been.HealthStatus.PSEUDOIMUNE].Count,
-                    indexes[Been.HealthStatus.INFECTED].Count,
-                    indexes[Been.HealthStatus.DEAD].Count,
+                    indexes[Being.HealthStatus.HEALTHY].Count,
+                    indexes[Being.HealthStatus.IMUNE].Count,
+                    indexes[Being.HealthStatus.PSEUDOIMUNE].Count,
+                    indexes[Being.HealthStatus.INFECTED].Count,
+                    indexes[Being.HealthStatus.DEAD].Count,
                     newInfected, deadByAge, casualties, births)
                 );
 
@@ -217,7 +217,7 @@ public class Board
     /// </summary>
     /// <param name="idx">índice a transferir.</param>
     /// <param name="state">região da rede.</param>
-    private void MoveIndexTo(int idx, Been.HealthStatus state)
+    private void MoveIndexTo(int idx, Being.HealthStatus state)
     {
         MoveIndexTo(new List<int>() { idx }, state);
     }
@@ -226,9 +226,9 @@ public class Board
     /// </summary>
     /// <param name="idxs">enumerável com os índices a transferir.</param>
     /// <param name="state">região da rede.</param>
-    private void MoveIndexTo(IEnumerable<int> idxs, Been.HealthStatus state)
+    private void MoveIndexTo(IEnumerable<int> idxs, Being.HealthStatus state)
     {
-        foreach (Been.HealthStatus stateIdx in indexes.Keys)
+        foreach (Being.HealthStatus stateIdx in indexes.Keys)
             indexes[stateIdx].RemoveAll(i => idxs.Contains(i));
         indexes[state].AddRange(idxs);
     }
@@ -245,7 +245,7 @@ public class Board
         List<int[]> moves = new List<int[]>();
 
         // Marca infecções e movimentos.
-        foreach (int pos in indexes[Been.HealthStatus.INFECTED])
+        foreach (int pos in indexes[Being.HealthStatus.INFECTED])
         {
             // Infecção dos vizinhos.
             int[] neighbours = Neighbours(pos);
@@ -259,11 +259,11 @@ public class Board
         }
 
         // Atualiza a rede.
-        MoveIndexTo(contamination, Been.HealthStatus.INFECTED);
+        MoveIndexTo(contamination, Being.HealthStatus.INFECTED);
         foreach (int[] move in moves)
         {
             // Troca seres de lugar.
-            Been m = data[move[1]];
+            Being m = data[move[1]];
             data[move[1]] = data[move[0]];
             data[move[0]] = m;
 
@@ -295,7 +295,7 @@ public class Board
             bool death = byAccident ? data[i].DieInAccident() : data[i].TimeToDie();
             if (death) deads.Add(i);
         }
-        MoveIndexTo(deads, Been.HealthStatus.DEAD);
+        MoveIndexTo(deads, Being.HealthStatus.DEAD);
 
         // Notifica listeners.
         foreach (IStepListener listener in listeners)
@@ -312,7 +312,7 @@ public class Board
     {
         // Ativa renascimentos.
         List<int> reborn = new List<int>();
-        foreach (int i in indexes[Been.HealthStatus.DEAD])
+        foreach (int i in indexes[Being.HealthStatus.DEAD])
             if (data[i].Spawn())
                 reborn.Add(i);
         foreach (int i in reborn)

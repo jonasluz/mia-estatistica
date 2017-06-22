@@ -46,23 +46,23 @@ public class BeenView : MonoBehaviour {
     {
         //SetSpriteImpl(byAccident ? deadByAccident : deadByAge);
     }
-    public void SetSprite(Been.HealthStatus state)
+    public void SetSprite(Being.HealthStatus state)
     {
         switch (state)
         {
-            case Been.HealthStatus.HEALTHY:
+            case Being.HealthStatus.HEALTHY:
                 SetSpriteImpl(healthy);
                 break;
-            case Been.HealthStatus.IMUNE:
+            case Being.HealthStatus.IMUNE:
                 SetSpriteImpl(imune);
                 break;
-            case Been.HealthStatus.INFECTED:
+            case Being.HealthStatus.INFECTED:
                 SetSpriteImpl(infected);
                 break;
-            case Been.HealthStatus.PSEUDOIMUNE:
+            case Being.HealthStatus.PSEUDOIMUNE:
                 SetSpriteImpl(pseudoImunes);
                 break;
-            case Been.HealthStatus.DEAD:
+            case Being.HealthStatus.DEAD:
                 SetSpriteImpl(deadByAccident);
                 break;
         }

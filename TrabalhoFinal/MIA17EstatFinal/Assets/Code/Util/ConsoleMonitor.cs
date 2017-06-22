@@ -48,21 +48,21 @@ class ConsoleMonitor : IStepListener
             for (int j = 0; j < n; ++j)
             {
                 int idx = i * n + j;
-                Been b = Board.B.Get(idx);
+                Being b = Board.B.Get(idx);
                 char mark = ' ';
                 if (b != null)
                     switch (b.Health)
                     {
-                        case Been.HealthStatus.HEALTHY:
+                        case Being.HealthStatus.HEALTHY:
                             mark = 'H';
                             break;
-                        case Been.HealthStatus.IMUNE:
+                        case Being.HealthStatus.IMUNE:
                             mark = 'I';
                             break;
-                        case Been.HealthStatus.INFECTED:
+                        case Being.HealthStatus.INFECTED:
                             mark = 'X';
                             break;
-                        case Been.HealthStatus.PSEUDOIMUNE:
+                        case Being.HealthStatus.PSEUDOIMUNE:
                             mark = 'P';
                             break;
                     }

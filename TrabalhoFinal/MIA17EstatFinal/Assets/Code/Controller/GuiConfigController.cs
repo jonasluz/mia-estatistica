@@ -83,9 +83,9 @@ public class GuiConfigController : MonoBehaviour {
     /// </summary>
     void Propagate()
     { 
-        Been.PseudoimuneChance = sliderInfectionChance.Value;
-        Been.AccidentChance = sliderAccidentChance.Value;
-        Been.SpawningChance = sliderBirthChance.Value;
+        Being.PseudoimuneChance = sliderInfectionChance.Value;
+        Being.AccidentChance = sliderAccidentChance.Value;
+        Being.SpawningChance = sliderBirthChance.Value;
         //cycleDurationInSec = sliderFrequency.CycleTimeInSecs;
     }
 }

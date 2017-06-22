@@ -65,7 +65,7 @@ public class BoardManager : MonoBehaviour, IStepListener {
     {
         for (int i=0; i < maximum; ++i)
         {
-            Been b = Board.B.Get(i);
+            Being b = Board.B.Get(i);
             if (b == null) icons[i].SetSprite();
             else icons[i].SetSprite(b.Health);
         }

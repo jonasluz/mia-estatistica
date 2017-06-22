@@ -3,7 +3,7 @@
 /// <summary>
 /// Um ser, sujeito a viver, adoecer e morrer...
 /// </summary>
-public class Been {
+public class Being {
 
     public enum HealthStatus
     {
